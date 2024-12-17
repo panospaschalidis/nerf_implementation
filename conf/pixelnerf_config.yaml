@@ -1,0 +1,93 @@
+dict:
+
+    # dataset configuration
+    # for cpu setup uncomment line 6 and comment line 7 
+    # for gpu setup perform the inverse
+    data: 
+        conf: conf/datasets_conf.yaml 
+        # dataset designator
+        desgn: SRN
+
+    # batch_size configuration
+    batch_size: 
+        train: 4
+        valid: 4
+        test: 1
+    
+
+    net_conf:
+ 
+        # inverse transform sampling
+        inv_tr_conf:
+            Fine: True
+            Nf: 16
+            Refine: True
+            Nrf: 16 
+            std: 0.01
+
+        # model learning parameters configuration
+        learn_conf:
+            l_r: 1.e-4
+            l_r_dec: 
+            epochs: 700
+            nobbox_epoch_limit: 500
+
+        # define working space either view or world
+        # by setting view_space as True or False
+        # respectively
+
+        arch:
+            view_space: False
+            # model architecture pixelnerf
+            pixelnerf:
+                
+                inpt: 3
+                # resnet blocks 
+                res_blocks: 5
+                # latent space dimension
+                latent_dim: 512
+                # specify number of first layers which output will be
+                # averaged in case of multiple input views
+                average: 3
+                # positional encoding configuration
+                PE_conf: 
+                    points: 6
+                    dirs: 4
+                # width: 512
+                outpt: 3
+
+            # model architecture nerf
+            nerf:
+                use: True
+                inpt: 3
+                # positional encoding configuration
+                PE_conf: 
+                    points: 10
+                    dirs: 4
+                latent_dim: [256, 128]
+                outpt: 3
+
+        encoder:
+            use: True
+            type: resnet18
+            channels: 512
+            skip_pool: True
+            layers_for_sampling: 
+                                - relu
+                                - layer1
+                                - layer2
+                                - layer3
+            upsampling_mode: bilinear
+            align_corners: True
+            interpolation_mode: bilinear
+            padding_mode: border
+            num_in_views: 2
+
+        metrics:
+            - psnr
+            - ssim
+            - lpips
+
+
+        model_info:
+            type: 'pixelnerf'

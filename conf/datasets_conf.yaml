@@ -1,0 +1,37 @@
+Lego:
+    path: /home/panagiotis/workstation/repos/nerf_workspace/final_nerf_version/lego_dataset/
+    # path: /content/nerf_workspace/final_nerf_version/lego_dataset/
+    input_conf:
+        # ray tracing
+        ray_conf:
+            ray_batch: 2500
+
+        # hierarchical sampling
+        hier_samp_conf:
+            t_near: 2
+            t_far: 6
+            Nc: 64
+        
+        encoder: False
+SRN:
+    # same for train, test, val images
+    path: /media/panagiotis/1879BE49123DE4EB/datasets/pixelnerf_datasets/SRN_shapenet/prepr_srn_cars_new/cars_
+    # path: /home/panagiotis/workstation/overfit_dataset/cars_
+    # path: /content/prepr_srn_cars_new/cars_
+    # path: /home/panos/datasets/prepr_srn_cars_new/cars_
+    input_conf:
+        ray_batch: 128
+        num_in_views: 2 
+        input_views:  
+        target_view: 
+        
+        # hierarchical sampling
+        hier_samp_conf:
+            t_near: 0.8
+            t_far: 1.8
+            Nc: 64
+        
+        bbox: True
+MVR:
+
+DTU:

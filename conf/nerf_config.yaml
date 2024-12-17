@@ -1,0 +1,68 @@
+dict:
+
+    # dataset configuration
+    # for cpu setup uncomment line 6 and comment line 7 
+    # for gpu setup perform the inverse
+    data: 
+        conf: conf/datasets_conf.yaml 
+        # dataset designator
+        desgn: Lego
+
+
+    # batch_size configuration
+    batch_size: 
+        train: 3
+        valid: 3
+        test: 1
+
+
+    net_conf:
+
+        # inverse transform sampling
+        inv_tr_conf:
+            Fine: True
+            Nf: 32
+            Refine: False
+            Nrf: 
+            std:
+
+        # model learning parameters configuration
+        learn_conf:
+            l_r: 1.e-4
+            l_r_dec: 
+            epochs: 5000
+            nobbox_epoch_limit: 
+        
+        # model architecture
+        arch:
+            inpt: 3
+            # positional encoding configuration
+            PE_conf: 
+                points: 10
+                dirs: 4
+            latent_dim: [256, 128]
+            outpt: 3
+    
+        encoder:
+            use: False
+            type: resnet18
+            channels: 512
+            skip_pool: True
+            layers_for_sampling: 
+                                - relu
+                                - layer1
+                                - layer2
+                                - layer3
+            upsampling_mode: bilinear
+            align_corners: True
+            interpolation_mode: bilinear
+            padding_mode: border
+            num_in_views: 1
+
+        metrics:
+           - psnr
+
+        model_info:
+            type: 'nerf'
+
+
