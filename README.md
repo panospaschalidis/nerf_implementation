@@ -25,7 +25,8 @@ python reconstruction.py --conf conf/nerf_config.yaml --model_path checkpoints/<
 ```
 
 For 3D reconstruction you can extract colorless meshes through
-
+that utilizes [marching cubes](https://github.com/pmneila/PyMCubes)
+implemented by [pmneila](https://github.com/pmneila)
 ```
 python reconstruction.py --model_path checkpoints/<model_path>  
 ```

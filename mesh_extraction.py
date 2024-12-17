@@ -59,6 +59,7 @@ print('done', vertices.shape, triangles.shape)
 import trimesh
 
 mesh = trimesh.Trimesh(vertices / N - .5, triangles)
+os.makedirs('extracted_meshes', exist_ok=True)
 mesh_out_file = os.path.join('extracted_meshes', 
                             os.path.splitext(
                                 os.path.basename(
