@@ -1,4 +1,5 @@
 """standard libraries"""
+import argparse
 import os
 import sys
 import glob
@@ -16,13 +17,19 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision.transforms import ToTensor
 from mpl_toolkits.mplot3d import Axes3D
 
-"""local specific imports"""
-#from data import LegoDataset
-#from train.utils import reconstruction
 
+parser = argparse.ArgumentParser(
+    description = "Radiance Fields mesh extraction process"
+)
+parser.add_argument(
+    "--model_path",
+    default="checkpoints/exalted-bush-58.4900.pth",
+    help="path to given checkpoint"
+)
+
+args = parser.parse_args()
 ## repalce model_path with your stored model path
-model_path = '/home/panagiotis/workstation/checkpoints/nerf/exalted-bush-58.4900.pth'
-model = torch.load(model_path, map_location=('cpu'))['model']
+model = torch.load(args.model_path, map_location=('cpu'))['model']
 device = 'cpu'
 N = 64
 t = torch.linspace(-1.2, 1.2, N+1)
@@ -52,12 +59,10 @@ print('done', vertices.shape, triangles.shape)
 import trimesh
 
 mesh = trimesh.Trimesh(vertices / N - .5, triangles)
-mesh_out_file = '/home/panagiotis/workstation/extracted_meshes/nerf'
-mesh_out_file = os.path.join(mesh_out_file, 
+mesh_out_file = os.path.join('extracted_meshes', 
                             os.path.splitext(
                                 os.path.basename(
-                                    model_path))[0]+'_50.ply')
+                                    args.model_path))[0]+"_"+str(threshold)+".ply")
 trimesh.exchange.export.export_mesh(mesh, mesh_out_file)
-
 mesh.show()
 

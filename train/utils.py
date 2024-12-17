@@ -158,12 +158,12 @@ def reconstruction(models, dataloader, inv_tr_conf, device):
 def save_models(model, optimizer, epoch, bbox, project_name ):
     if bbox:
         path = os.path.join(
-            '/content/drive/MyDrive/checkpoints/nerf',
+            'checkpoints/bbox',
             project_name + '.' + str(epoch) + '.pth'
             )
     else:
         path = os.path.join(
-            '/home/panos/workspace/checkpoints/nobbox',
+            'checkpoints/nobbox',
             project_name + '.' + str(epoch) + '.pth'
             )
 

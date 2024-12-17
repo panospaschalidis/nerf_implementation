@@ -12,23 +12,25 @@ from torch.utils.data import DataLoader
 """local specific imports"""
 from train.utils import reconstruction
 from data import data_splitter
-trained_models = [
-    'dulcet-bush-116',
-    'golden-donkey-123',
-    'fresh-paper-124',
-    'clear-shape-126',
-    'flowing-leaf-128'
-    'faithful-valley-125',
-    'sleek-wood-129'
-]
+
 
 parser = argparse.ArgumentParser(
-    description = "Radiance Fields"
+    description = "Radiance Fields reconstruction process"
 )
 parser.add_argument(
     "--conf",
     default=None,
-    help="path of configuration file"
+    help="configuration file path"
+)
+parser.add_argument(
+    "--model_path",
+    default=None,
+    help="path to given checkpoint"
+)
+parser.add_argument(
+    "--render_path",
+    default=None,
+    help="path to render directory"
 )
 args = parser.parse_args()
 params = yaml.full_load(open(args.conf, 'r')).get('dict')
@@ -45,15 +47,10 @@ test_dataloader = DataLoader(
     shuffle=True,
     drop_last=True
 )
-path = '/content/drive/MyDrive/checkpoints/'
-path = '/home/panagiotis/workstation/overfit_dataset/trained_models/'
 
-trained_models = [
-    'dulcet-bush-116'
-]
 dict_ = {}
 for j in range(len(trained_models)):
-    models =  torch.load(os.path.join(path, trained_models[j]+'.pth'), map_location=('cpu'))['models']
+    models =  torch.load(os.path.join(args.model_path, map_location=('cpu'))['models']
     models['coarse'].device = device
     models['coarse'].encoder.device = device
     images = [] 
@@ -83,7 +80,6 @@ for val in range(len(dict_['target'])):
         ax[int(np.ceil((num+1)/3))-1,int(num%3)].imshow(dict_[key][val,...])
         ax[int(np.ceil((num+1)/3))-1,int(num%3)].axis("off")
         ax[int(np.ceil((num+1)/3))-1,int(num%3)].set_title(key)
-    path = '/home/panagiotis/workstation/overfit_dataset/images/....'
-    fig_label= os.path.join(path,str(val)+'.png')
+    fig_label= os.path.join(args.render_path,str(val)+'.png')
     fig.savefig(fig_label)
 
