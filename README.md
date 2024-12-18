@@ -28,7 +28,7 @@ For 3D reconstruction you can extract colorless meshes through
 that utilizes [marching cubes](https://github.com/pmneila/PyMCubes)
 implemented by [pmneila](https://github.com/pmneila)
 ```
-python reconstruction.py --model_path checkpoints/<model_path>  
+python mesh_extraction.py --model_path checkpoints/<model_path>  
 ```
 
 In order to save you some time, we provide a pretrained model 
